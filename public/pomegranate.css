@@ -1,0 +1,25 @@
+/* CSS declarations go here */
+html, body{
+	width:100%;
+	overflow-x:hidden;
+}
+.navbar{
+	border-radius:0px;
+}
+#new-narrative-content{
+	border:0px;
+	background-color: #ffffff;
+	border-radius: 0px;
+}
+.story.panel{
+	padding:1em;
+	height:10em;
+	overflow:hidden;
+}
+.remove-episode-narrative{
+	cursor:pointer;
+}
+.narrative-content{
+	text-indent:3em;
+	line-height:1.6em;
+}

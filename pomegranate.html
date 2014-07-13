@@ -1,0 +1,145 @@
+<head>
+  <title>Pomegranate</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type="text/stylesheet" rel="stylesheet" />
+  <link href="http://bootswatch.com/flatly/bootstrap.min.css" rel="stylesheet" />
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link href="/pomegranate.css" rel="stylesheet" />
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+
+<body>
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="../" class="navbar-brand">Pomegranate</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/stories">Stories</a>
+          </li>
+          <li>
+            <a href="/episodes">Episodes</a>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Download <span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="download">
+              <li><a href="./bootstrap.min.css">bootstrap.min.css</a></li>
+              <li class="divider"></li>
+              <li><a href="./variables.less">variables.less</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">{{> loginButtons align="right"}}</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+	<div class="container">
+   	{{> renderPage}}
+  </div>
+</body>
+
+
+<template name="stories">
+  <h1>Stories!</h1>
+  <div class="col-sm-12">
+    <div class="new-story col-sm-5">
+      <div class="form-group">
+        <input type="text" id="new-story-name" placeholder="Name" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <textarea id="new-story-description" placeholder="Description" class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+  {{#each stories}}
+      <div class="col-sm-4">
+        <a href="/stories/{{_id}}/episodes" class="col-sm-12 story panel panel-default">
+          <div class="col-sm-12">
+            <strong>{{name}}</strong>
+          </div>
+          <div class="col-sm-12">
+            {{description}}
+          </div>
+        </a>
+      </div>
+  {{/each}}
+  </div>
+</template>
+
+
+<template name="episode">
+  <h1>Episode!</h1>
+      <div class="container">
+        <div class="col-sm-12">
+          <strong>{{episode.name}}</strong>
+        </div>
+        <div class="col-sm-12">
+          {{episode.description}}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <br />
+        <div class="container">
+          {{#each narratives}}
+            <div class="row narrative">
+              <div class="col-sm-8 col-xs-10 narrative-content">{{content}}</div>
+              <div class="col-sm-3 hidden-xs">{{ownerName}}</div>
+              <div class="col-xs-1 hidden-sm visible-xs">
+                {{initials}} 
+                <div class="remove-episode-narrative fa fa-times" data-narrative-id="{{_id}}"></div>
+              </div>
+              <div class="col-sm-1 hidden-xs"><div class="remove-episode-narrative fa fa-times" data-narrative-id="{{_id}}"></div></div>
+            </div>
+          {{/each}}
+          {{swipeMe}}
+        </div>
+        <textarea type="text" id="new-narrative-content" placeholder="Episode Text" class="form-control"></textarea>
+      </div>
+</template>
+
+<template name="episodes">
+   <h1>Episodes!</h1>
+  <div class="new-episode col-sm-5">
+    <div class="form-group">
+      <input type="text" id="new-episode-name" placeholder="Episode Name" class="form-control"/>
+    </div>
+    <div class="form-group">
+      {{#if currentStoryId}}
+        <input type="hidden" id="new-episode-story-id" class="form-control" value="{{currentStoryId}}">
+      {{else}}
+        <select id="new-episode-story-id" class="form-control">
+          {{#each yourStories}}
+            <option value="{{_id}}">{{name}}</option>
+          {{/each}}
+        </select>
+      {{/if}}
+    </div>
+    <div class="form-group">
+      <textarea id="new-episode-description" placeholder="Episode Description" class="form-control"></textarea>
+    </div>
+  </div>
+
+  {{#each episodes}}
+    <a href="/episodes/{{_id}}">
+      <div class="col-sm-12">
+        
+      </div>
+      <div class="col-sm-12">
+        Episode {{this.index}} - <strong>{{name}}</strong>
+      </div>
+    </a>
+  {{/each}}
+</template>
